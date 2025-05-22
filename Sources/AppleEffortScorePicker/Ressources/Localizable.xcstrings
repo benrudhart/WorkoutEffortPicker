@@ -1280,7 +1280,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wählen Sie die Beschreibung, die am besten zum gesamten Training passt."
+            "value" : "Wählen die Beschreibung aus, die das Training ingesamt am besten widerspiegelt."
           }
         },
         "el" : {
@@ -1530,7 +1530,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Das Überspringen dieses Trainings wird es aus Ihrer Trainingsbelastung entfernen."
+            "value" : "Wenn du dieses Training überspringst, wird es aus deiner Trainingsbelastung entfernt."
           }
         },
         "el" : {
@@ -1780,7 +1780,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Extrem unangenehm\nKonnte kaum weitermachen"
+            "value" : "Extrem anstrengend\nKönnte das Training kaum fortsetzen"
           }
         },
         "el" : {
@@ -2030,7 +2030,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Volle Kraft"
+            "value" : "Extrem"
           }
         },
         "el" : {
@@ -2280,7 +2280,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nicht herausfordernd\nKönnte lange weitermachen"
+            "value" : "Nicht anstrengend\nKönnte das Training lange fortsetzen"
           }
         },
         "el" : {
@@ -2530,7 +2530,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Einfach"
+            "value" : "Leicht"
           }
         },
         "el" : {
@@ -2780,7 +2780,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Herausfordernd und unangenehm\nKonnte überhaupt nicht lange durchhalten"
+            "value" : "Anstrengend und unangenehm\nKönnte das Training nicht lange fortsetzen"
           }
         },
         "el" : {
@@ -3280,7 +3280,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Arbeiten, aber bequem\nKönnte eine Weile weitermachen"
+            "value" : "Etwas anstrengend, aber angenehm\nKönnte das Training eine Weile fortsetzen"
           }
         },
         "el" : {
@@ -3780,7 +3780,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bewerten Sie Ihren Aufwand"
+            "value" : "Anstrengung bewerten"
           }
         },
         "el" : {
