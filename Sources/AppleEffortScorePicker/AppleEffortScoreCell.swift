@@ -75,10 +75,10 @@ public struct AppleEffortScoreCell: View {
     }
 
     private var labeledContent: some View {
-        LabeledContent {
-            scoreIcon
-        } label: {
+        HStack {
             contentLabel
+                .frame(maxWidth: .infinity, alignment: .leading)
+            scoreIcon
         }
         .font(.title2)
     }
@@ -86,13 +86,18 @@ public struct AppleEffortScoreCell: View {
     private var contentLabel: some View {
         HStack {
             EffortScoreIcon(score: score)
-                .symbolRenderingMode(.hierarchical)
+                .symbolRenderingMode(score != nil ? .hierarchical : .monochrome)
 #if os(watchOS)
                 .imageScale(.small)
 #endif
 
-            let key = score?.segment.localizedTitle ?? "common.skipped"
-            Text(key, bundle: .module)
+            if let score {
+                let key = score.segment?.localizedTitle ?? "common.skipped"
+                Text(key, bundle: .module)
+            } else {
+                Text("scoreCell.addEffort", bundle: .module)
+                    .font(.title)
+            }
         }
         .foregroundStyle(color)
 #if os(watchOS)
@@ -122,4 +127,5 @@ public struct AppleEffortScoreCell: View {
             AppleEffortScoreCell { _ in }
         }
     }
+    .environment(\.locale, .init(identifier: "de"))
 }

@@ -60,11 +60,8 @@ struct EffortScoreList: View {
 
     private var noSelectionSection: some View {
         Section {
-            label(score: nil)
-                .tag(AppleEffortScore?.none)
-                .onTapGesture {
-                    self.score = nil
-                }
+            label(score: .skipped)
+                .tag(AppleEffortScore.skipped)
         } header: {
             Divider()
                 .listRowInsets(EdgeInsets())
@@ -74,13 +71,13 @@ struct EffortScoreList: View {
         }
     }
 
-    private func label(score: AppleEffortScore?) -> some View {
+    private func label(score: AppleEffortScore) -> some View {
         LabeledContent {
             if score == self.score {
                 Image(systemName: "checkmark")
             }
         } label: {
-            EffortScoreLabel(score: score)
+            EffortScoreLabel(score: score, isList: true)
         }
         .font(.title3.weight(.semibold))
         .foregroundStyle(.white)
@@ -101,7 +98,7 @@ struct EffortScoreList: View {
 #Preview {
     @Previewable @State var score: AppleEffortScore?
     @Previewable @State var isPresented = true
-    Text(score?.segment.localizedTitle ?? "common.skipped")
+    Text(score?.segment?.localizedTitle ?? "common.skipped")
         .frame(maxHeight: .infinity)
         .background(BackgroundGradient(score: score))
         .sheet(isPresented: $isPresented) {

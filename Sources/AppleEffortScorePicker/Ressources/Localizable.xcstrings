@@ -1001,6 +1001,22 @@
         }
       }
     },
+    "scoreCell.addEffort" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anstrengung hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Effort"
+          }
+        }
+      }
+    },
     "scoreCell.effort" : {
       "localizations" : {
         "ar" : {
@@ -1030,7 +1046,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aufwand"
+            "value" : "Anstrengung"
           }
         },
         "el" : {

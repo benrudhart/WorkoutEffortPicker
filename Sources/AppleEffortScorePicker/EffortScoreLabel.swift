@@ -4,7 +4,8 @@ import SwiftUI
 
 @available(iOS 18.0, watchOS 11.0, *)
 struct EffortScoreLabel: View {
-    let score: AppleEffortScore?
+    let score: AppleEffortScore
+    let isList: Bool
 
     var body: some View {
         Label {
@@ -18,10 +19,10 @@ struct EffortScoreLabel: View {
     }
 
     private var title: some View {
-        if let score {
-            Text(score.segment.localizedTitle, bundle: .module)
+        if let segment = score.segment {
+            Text(segment.localizedTitle, bundle: .module)
         } else {
-            Text("common.skip", bundle: .module)
+            Text(isList ? "common.skip" : "common.skipped", bundle: .module)
         }
     }
 
@@ -46,9 +47,14 @@ struct EffortScoreIcon: View {
 
     private var systemName: String {
         if let score {
-            "\(score.rawValue).circle.fill"
+            switch score {
+            case .skipped:
+                "righttriangle.split.diagonal.fill" // TODO: get better image
+            default:
+                "\(score.rawValue).circle.fill"
+            }
         } else {
-            "righttriangle.split.diagonal.fill" // TODO: get better image
+            "plus.circle"
         }
     }
 }
@@ -56,6 +62,6 @@ struct EffortScoreIcon: View {
 @available(iOS 18.0, watchOS 11.0, *)
 #Preview {
     List {
-        EffortScoreLabel(score: .easy3)
+        EffortScoreLabel(score: .skipped, isList: true)
     }
 }

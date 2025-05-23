@@ -46,7 +46,8 @@ struct EffortScorePicker: View {
         ZStack(alignment: .bottomLeading) {
             backgroundSegments
 
-            if score != nil {
+            if score != nil,
+               score != .skipped {
                 selectionIndicator
             }
         }
@@ -107,9 +108,11 @@ struct EffortScorePicker: View {
     }
 
     private func indicatorOffset(at score: AppleEffortScore) -> CGFloat {
+        guard let segmentIndex = score.segmentIndex else { return 0 }
+
         let step = score.rawValue - 1
         let offset = CGFloat(step) * stepWidth
-        let segmentSpacingAtOffset = segmentSpacing * CGFloat(score.segmentIndex)
+        let segmentSpacingAtOffset = segmentSpacing * CGFloat(segmentIndex)
         return offset + segmentSpacingAtOffset
     }
 
@@ -165,11 +168,11 @@ extension View {
 
 @available(iOS 18.0, watchOS 11.0, *)
 #Preview {
-    @Previewable @State var score: AppleEffortScore? = .easy1
+    @Previewable @State var score: AppleEffortScore? = .skipped
 
     VStack(spacing: 50) {
         VStack {
-            Text(score?.segment.localizedTitle ?? "common.skipped", bundle: .module)
+            Text(score?.segment?.localizedTitle ?? "common.skipped", bundle: .module)
             Text(score?.rawValue ?? 0, format: .number)
         }
 #if os(iOS)

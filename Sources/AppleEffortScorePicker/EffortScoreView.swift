@@ -31,7 +31,9 @@ struct EffortScoreView: View {
         VStack(spacing: stackSpacing) {
             header
             EffortScorePicker(score: $score)
+
             currentValueLink
+                .animation(.smooth.speed(0.7), value: score != nil) // animate when first selecting a score
         }
         .scenePadding()
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -119,6 +121,7 @@ struct EffortScoreView: View {
             .padding(.horizontal)
 #if os(iOS)
             .padding(.vertical, 10)
+            .frame(maxWidth: .infinity)
             .background(.white.opacity(0.07))
             .clipShape(.rect(cornerRadius: 12))
 #else
@@ -131,17 +134,33 @@ struct EffortScoreView: View {
     @ViewBuilder
     private var currentValueOSLabel: some View {
 #if os(iOS)
-        LabeledContent {
-            Image(systemName: "info.circle")
-                .foregroundStyle(.secondary)
-                .fontWeight(.medium)
-        } label: {
-            EffortScoreLabel(score: score)
+        if let score {
+            LabeledContent {
+                Image(systemName: "info.circle")
+                    .foregroundStyle(.secondary)
+                    .fontWeight(.medium)
+            } label: {
+                EffortScoreLabel(score: score, isList: false)
+            }
+        } else {
+            rateEffortText
         }
 #else
-        EffortScoreLabel(score: score)
-            .frame(maxWidth: .infinity, alignment: .leading)
+        if let score {
+            EffortScoreLabel(score: score, isList: false)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        } else {
+            rateEffortText
+        }
 #endif
+    }
+
+    private var rateEffortText: some View {
+        Text("scoreView.rateEffort", bundle: .module)
+            .font(.title3)
+            .lineLimit(1)
+            .minimumScaleFactor(0.9)
+            .frame(maxWidth: .infinity, alignment: .center)
     }
 }
 
@@ -152,7 +171,7 @@ struct EffortScoreView: View {
 
     Text(verbatim: "Root View")
         .sheet(isPresented: $isPresented) {
-            EffortScoreView(score: .moderate1) { _ in }
+            EffortScoreView(score: .skipped) { _ in }
         }
         .preferredColorScheme(.dark)
 }
@@ -160,7 +179,7 @@ struct EffortScoreView: View {
 @available(iOS 18.0, watchOS 11.0, *)
 #Preview {
     NavigationStack {
-        EffortScoreView(score: .moderate1) { _ in }
+        EffortScoreView(score: nil) { _ in }
     }
     .preferredColorScheme(.dark)
 }
