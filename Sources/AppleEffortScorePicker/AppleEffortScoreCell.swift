@@ -7,6 +7,7 @@ import HealthKit
 public struct AppleEffortScoreCell: View {
     @State private var viewModel: AppleEffortScoreCellViewModelProtocol
     @State private var isScoreViewPresented = false
+    @Environment(\.scenePhase) private var scenePhase
 
     /// convenience initializer, provides the default ViewModel
     public init(workout: HKWorkout) {
@@ -20,6 +21,11 @@ public struct AppleEffortScoreCell: View {
     public var body: some View {
         content
             .onAppear(perform: viewModel.onAppear)
+            .onChange(of: scenePhase) { _, newValue in
+                if newValue == .active {
+                    viewModel.onForeground()
+                }
+            }
             .preferredColorScheme(.dark)
     }
 
@@ -54,8 +60,22 @@ public struct AppleEffortScoreCell: View {
         }
     }
 
+    @ViewBuilder
     private func scoreView() -> some View {
-        EffortScoreView(score: viewModel.score, onSaveScore: saveScore(_:))
+#if os(iOS)
+        NavigationStack(root: scoreContent)
+#else
+        scoreContent()
+#endif
+    }
+
+    @ViewBuilder
+    private func scoreContent() -> some View {
+        if viewModel.isPermissionDenied {
+            UnauthorizedView()
+        } else {
+            EffortScoreView(score: viewModel.score, onSaveScore: saveScore(_:))
+        }
     }
 
     private func saveScore(_ score: AppleEffortScore?) {
@@ -138,10 +158,12 @@ public struct AppleEffortScoreCell: View {
 @Observable
 private class PreviewScoreViewModel: AppleEffortScoreCellViewModelProtocol {
     var score: AppleEffortScore? = .allOut1
+    var isPermissionDenied = false
 
     func saveScore(_ score: AppleEffortScore?) {
         self.score = score
     }
 
     func onAppear() {}
+    func onForeground() {}
 }

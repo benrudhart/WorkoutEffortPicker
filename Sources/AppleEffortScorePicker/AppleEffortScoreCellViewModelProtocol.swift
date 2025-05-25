@@ -6,6 +6,8 @@ import Foundation
 @MainActor
 public protocol AppleEffortScoreCellViewModelProtocol {
     var score: AppleEffortScore? { get }
+    var isPermissionDenied: Bool { get }
     func saveScore(_ score: AppleEffortScore?)
     func onAppear()
+    func onForeground()
 }

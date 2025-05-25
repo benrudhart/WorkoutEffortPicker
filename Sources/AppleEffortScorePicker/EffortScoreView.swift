@@ -18,16 +18,6 @@ struct EffortScoreView: View {
     }
 
     var body: some View {
-#if os(iOS)
-        NavigationStack {
-            content
-        }
-#else
-        content
-#endif
-    }
-
-    private var content: some View {
         VStack(spacing: stackSpacing) {
             header
             EffortScorePicker(score: $score)

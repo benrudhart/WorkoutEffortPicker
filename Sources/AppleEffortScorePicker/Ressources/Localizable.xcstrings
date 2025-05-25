@@ -4250,6 +4250,66 @@
           }
         }
       }
+    },
+    "unauthorized.message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In order to read and write the workout effort you need to grant permissions."
+          }
+        }
+      }
+    },
+    "unauthorized.step1" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Apple Health App"
+          }
+        }
+      }
+    },
+    "unauthorized.step2" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Sharing Tab"
+          }
+        }
+      }
+    },
+    "unauthorized.step3" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Navigate to Apps and select this app"
+          }
+        }
+      }
+    },
+    "unauthorized.step4" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make sure “Workout Effort Score” permissions are granted"
+          }
+        }
+      }
+    },
+    "unauthorized.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permission Denied"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
