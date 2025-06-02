@@ -3,7 +3,7 @@
 import HealthKit
 import SwiftUI
 
-public enum AppleEffortScore: Int, CaseIterable, Comparable, Sendable, Strideable {
+public enum AppleEffortScore: Int, Comparable, Sendable, Strideable {
     /// The user decided to skip the effort for this workout. This differs from not selecting a value at all!
     case skipped = 0
     case easy1 = 1
@@ -33,13 +33,12 @@ public enum AppleEffortScore: Int, CaseIterable, Comparable, Sendable, Strideabl
 
     /// Initializes with the given `safeScoreValue`. If it is "out of bounds" the  closest bounds will be used
     init(safeScoreValue: Int) {
-        if let score = AppleEffortScore(rawValue: safeScoreValue) {
+        if safeScoreValue < 1 {
+            self = .easy1
+        } else if let score = AppleEffortScore(rawValue: safeScoreValue) {
             self = score
         } else {
-            let all = AppleEffortScore.allCases
-            let lowerBound = all.min()!
-            let upperBound = all.max()!
-            self = safeScoreValue < lowerBound.rawValue ? lowerBound : upperBound
+            self = .allOut2
         }
     }
 }

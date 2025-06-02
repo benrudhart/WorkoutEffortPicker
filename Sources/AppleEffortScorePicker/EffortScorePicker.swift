@@ -67,7 +67,7 @@ struct EffortScorePicker: View {
             crownBinding,
             from: Double(range.lowerBound.rawValue),
             through: Double(range.upperBound.rawValue),
-            sensitivity: .low
+            sensitivity: .medium
         )
 #endif
     }
