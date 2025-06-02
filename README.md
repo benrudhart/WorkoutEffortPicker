@@ -1,6 +1,10 @@
 # AppleEffortScorePicker
 Offers a drop-in SwiftUI component for Apple’s missing HealthKit effort score picker. As of iOS 18 and watchOS 11, Apple provides an API to read and write the effort of a HealthKit Workout, but doesn’t include a UI component for users to select a value. This library fills that gap.
 
+| iOS Demo | watchOS Demo |
+|:--------:|:------------:|
+| ![iOS Demo](https://github.com/user-attachments/assets/9721711e-95c4-4757-8046-9079cd9555fb) | ![watchOS Demo](https://github.com/user-attachments/assets/b5df77c3-74cc-40d5-ab61-07d2434a37ea) |
+
 # Features
 -	UI/UX that closely mimics Apple’s native design on watchOS/iOS
 -	Simplified `HKHealthStore` APIs to fetch and save effort scores for workouts
