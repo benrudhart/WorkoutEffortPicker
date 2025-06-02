@@ -46,11 +46,12 @@ public struct AppleEffortScoreCell: View {
             buttonLabel
         }
         .buttonBorderShape(.roundedRectangle)
+        .tint(Color.white.secondary)
 #endif
     }
 
     private var buttonLabel: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 8) {
             title
 #if os(watchOS)
             contentLabel
@@ -85,12 +86,15 @@ public struct AppleEffortScoreCell: View {
     private var title: some View {
         HStack {
             Text("scoreCell.effort", bundle: .module)
+                .foregroundStyle(.white)
 #if os(watchOS)
                 .frame(maxWidth: .infinity, alignment: .leading)
 #endif
-            Image(systemName: "plusminus")
-                .imageScale(.small)
-                .foregroundStyle(.secondary)
+            if viewModel.score != nil {
+                Image(systemName: "plusminus")
+                    .imageScale(.small)
+                    .foregroundStyle(.secondary)
+            }
         }
         .font(.subheadline)
 #if os(watchOS)
@@ -121,6 +125,10 @@ public struct AppleEffortScoreCell: View {
             } else {
                 Text("scoreCell.addEffort", bundle: .module)
                     .font(.title)
+#if os(watchOS)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.1)
+#endif
             }
         }
         .foregroundStyle(color)
@@ -131,7 +139,7 @@ public struct AppleEffortScoreCell: View {
 #endif
     }
 
-    private var color: Color {
+    private var color: some ShapeStyle {
         viewModel.score?.color ?? .gray
     }
 
@@ -157,7 +165,7 @@ public struct AppleEffortScoreCell: View {
 @available(iOS 18.0, watchOS 11.0, *)
 @Observable
 private class PreviewScoreViewModel: AppleEffortScoreCellViewModelProtocol {
-    var score: AppleEffortScore? = .allOut1
+    var score: AppleEffortScore?
     var isPermissionDenied = false
 
     func saveScore(_ score: AppleEffortScore?) {

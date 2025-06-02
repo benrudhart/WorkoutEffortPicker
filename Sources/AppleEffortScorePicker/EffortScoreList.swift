@@ -14,6 +14,7 @@ struct EffortScoreList: View {
 
             noSelectionSection
         }
+        .multilineTextAlignment(.leading)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .scrollContentBackground(.hidden)
         .environment(\.defaultMinListRowHeight, 60)
@@ -29,7 +30,8 @@ struct EffortScoreList: View {
         Text("scoreList.header", bundle: .module)
             .listRowBackground(Color.clear)
         #if os(watchOS)
-            .font(.caption)
+            .font(.footnote)
+            .fontWeight(.medium)
         #else
             .font(.callout)
         #endif
@@ -43,13 +45,19 @@ struct EffortScoreList: View {
         } header: {
             VStack(alignment: .leading) {
                 Text(segment.localizedTitle, bundle: .module)
-                    .font(.title3)
-                    .fontWeight(.bold)
-                Text(segment.localizedDescription, bundle: .module)
 #if os(watchOS)
                     .font(.caption2)
+                    .fontWeight(.medium)
+#else
+                    .font(.title3)
+                    .fontWeight(.bold)
+#endif
+
+                Text(segment.localizedDescription, bundle: .module)
+#if os(watchOS)
+                    .font(.footnote)
                     .foregroundStyle(.secondary)
-                    .fontWeight(.regular)
+                    .fontWeight(.medium)
 #endif
             }
             .fontWeight(.semibold)

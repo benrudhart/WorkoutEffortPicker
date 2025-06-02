@@ -25,7 +25,11 @@ struct EffortScoreView: View {
             currentValueLink
                 .animation(.smooth.speed(0.7), value: score != nil) // animate when first selecting a score
         }
+#if os(watchOS)
+        .scenePadding(.horizontal)
+#else
         .scenePadding()
+#endif
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .background(BackgroundGradient(score: score))
         .toolbar(content: toolbar)
@@ -62,15 +66,18 @@ struct EffortScoreView: View {
                     } icon: {
                         Image(systemName: "checkmark")
                     }
+                    .font(.body.weight(.medium))
 #if os(watchOS)
                     .foregroundStyle(.black)
                     .labelStyle(.iconOnly)
                     .buttonStyle(.plain)
 #else
                     .labelStyle(.titleOnly)
-                    #endif
+#endif
                 }
             )
+            .disabled(score == nil)
+            .tint(score == nil ? .tertiary : .primary)
         }
     }
 
@@ -115,7 +122,7 @@ struct EffortScoreView: View {
             .background(.white.opacity(0.07))
             .clipShape(.rect(cornerRadius: 12))
 #else
-            .padding(.vertical)
+            .padding(.vertical, score == nil ? 0 : 4)
             .background(.white.opacity(0.07))
             .clipShape(.buttonBorder)
 #endif
@@ -148,8 +155,14 @@ struct EffortScoreView: View {
     private var rateEffortText: some View {
         Text("scoreView.rateEffort", bundle: .module)
             .font(.title3)
+#if os(watchOS)
+            .lineLimit(2)
+            .multilineTextAlignment(.center)
+            .minimumScaleFactor(0.7)
+#else
             .lineLimit(1)
             .minimumScaleFactor(0.9)
+#endif
             .frame(maxWidth: .infinity, alignment: .center)
     }
 }
@@ -172,5 +185,6 @@ struct EffortScoreView: View {
         EffortScoreView(score: nil) { _ in }
     }
     .preferredColorScheme(.dark)
+    .environment(\.locale, Locale(identifier: "de"))
 }
 #endif
