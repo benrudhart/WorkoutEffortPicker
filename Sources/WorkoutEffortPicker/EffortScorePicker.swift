@@ -9,11 +9,11 @@ struct EffortScorePicker: View {
         case idle
     }
 
-    @Binding var score: AppleEffortScore?
+    @Binding var score: WorkoutEffortScore?
     @State private var totalWidth: CGFloat?
     @State private var dragState: DragState = .idle
     @Namespace private var indicatorAnimation
-    private let range = AppleEffortScore.easy1 ... .allOut2
+    private let range = WorkoutEffortScore.easy1 ... .allOut2
     private let backgroundColor: Color = .white.opacity(0.2)
 #if os(iOS)
     private let segmentSpacing: CGFloat = 8
@@ -37,7 +37,7 @@ struct EffortScorePicker: View {
     /// the distributed stepWidth which takes the segment spacings into account
     private var stepWidth: CGFloat {
         guard let totalWidth else { return 0 }
-        let numberOfSegmentSpacings = AppleEffortScoreSegment.allCases.count - 1
+        let numberOfSegmentSpacings = WorkoutEffortScoreSegment.allCases.count - 1
         let totalSegmentSpacing = CGFloat(numberOfSegmentSpacings) * segmentSpacing
         let stepWidth = (totalWidth - totalSegmentSpacing) / CGFloat(range.count)
         return max(stepWidth, 0)
@@ -74,7 +74,7 @@ struct EffortScorePicker: View {
 
     private var backgroundSegments: some View {
         HStack(alignment: .bottom, spacing: segmentSpacing) {
-            ForEach(AppleEffortScoreSegment.allCases) { segment in
+            ForEach(WorkoutEffortScoreSegment.allCases) { segment in
                 SegmentBackground(
                     segment: segment,
                     stepWidth: stepWidth,
@@ -114,7 +114,7 @@ struct EffortScorePicker: View {
         return offset.clamped(to: 0...maxValue)
     }
 
-    private func indicatorOffset(at score: AppleEffortScore) -> CGFloat {
+    private func indicatorOffset(at score: WorkoutEffortScore) -> CGFloat {
         guard let segmentIndex = score.segmentIndex else { return 0 }
 
         let step = score.rawValue - 1
@@ -123,7 +123,7 @@ struct EffortScorePicker: View {
         return offset + segmentSpacingAtOffset
     }
 
-    private func indicatorHeight(at score: AppleEffortScore?) -> CGFloat {
+    private func indicatorHeight(at score: WorkoutEffortScore?) -> CGFloat {
         guard let score, let totalWidth else { return 0 }
         let stepWidth = totalWidth / CGFloat(range.count)
         let offsetX = stepWidth * CGFloat(score.rawValue - 1)
@@ -152,17 +152,17 @@ struct EffortScorePicker: View {
         dragState = .idle
     }
 
-    private func score(at offset: CGFloat) -> AppleEffortScore {
+    private func score(at offset: CGFloat) -> WorkoutEffortScore {
         guard let totalWidth else { return .skipped }
         let stepWidth = totalWidth / CGFloat(range.count)
         let scoreValue = Int(offset / stepWidth) + 1
-        return AppleEffortScore(safeScoreValue: scoreValue)
+        return WorkoutEffortScore(safeScoreValue: scoreValue)
     }
 }
 
 @available(iOS 18.0, watchOS 11.0, *)
 #Preview {
-    @Previewable @State var score: AppleEffortScore? = .allOut2
+    @Previewable @State var score: WorkoutEffortScore? = .allOut2
 
     VStack(spacing: 50) {
         VStack {

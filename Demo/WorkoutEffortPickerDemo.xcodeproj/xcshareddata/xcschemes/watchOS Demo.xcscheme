@@ -61,9 +61,18 @@
             BlueprintIdentifier = "B59E714C2DDDB32F0054AF71"
             BuildableName = "watchOS Demo.app"
             BlueprintName = "watchOS Demo"
-            ReferencedContainer = "container:AppleEffortScorePickerDemo.xcodeproj">
+            ReferencedContainer = "container:WorkoutEffortPickerDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B59E714C2DDDB32F0054AF71"
+            BuildableName = "watchOS Demo.app"
+            BlueprintName = "watchOS Demo"
+            ReferencedContainer = "container:AppleEffortScorePickerDemo.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -81,6 +90,15 @@
             ReferencedContainer = "container:AppleEffortScorePickerDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B59E714C2DDDB32F0054AF71"
+            BuildableName = "watchOS Demo.app"
+            BlueprintName = "watchOS Demo"
+            ReferencedContainer = "container:AppleEffortScorePickerDemo.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

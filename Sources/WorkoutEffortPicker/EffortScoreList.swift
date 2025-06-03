@@ -4,13 +4,13 @@ import SwiftUI
 
 @available(iOS 18.0, watchOS 11.0, *)
 struct EffortScoreList: View {
-    @Binding var score: AppleEffortScore?
+    @Binding var score: WorkoutEffortScore?
 
     var body: some View {
         List(selection: $score) {
             header
 
-            ForEach(AppleEffortScoreSegment.allCases, content: section(segment:))
+            ForEach(WorkoutEffortScoreSegment.allCases, content: section(segment:))
 
             noSelectionSection
         }
@@ -37,7 +37,7 @@ struct EffortScoreList: View {
         #endif
     }
 
-    private func section(segment: AppleEffortScoreSegment) -> some View {
+    private func section(segment: WorkoutEffortScoreSegment) -> some View {
         Section {
             ForEach(segment.scores, id: \.self) { score in
                 label(score: score)
@@ -69,7 +69,7 @@ struct EffortScoreList: View {
     private var noSelectionSection: some View {
         Section {
             label(score: .skipped)
-                .tag(AppleEffortScore.skipped)
+                .tag(WorkoutEffortScore.skipped)
         } header: {
             Divider()
                 .listRowInsets(EdgeInsets())
@@ -79,7 +79,7 @@ struct EffortScoreList: View {
         }
     }
 
-    private func label(score: AppleEffortScore) -> some View {
+    private func label(score: WorkoutEffortScore) -> some View {
         LabeledContent {
             if score == self.score {
                 Image(systemName: "checkmark")
@@ -104,7 +104,7 @@ struct EffortScoreList: View {
 
 @available(iOS 18.0, watchOS 11.0, *)
 #Preview {
-    @Previewable @State var score: AppleEffortScore?
+    @Previewable @State var score: WorkoutEffortScore?
     @Previewable @State var isPresented = true
     Text(score?.segment?.localizedTitle ?? "common.skipped")
         .frame(maxHeight: .infinity)

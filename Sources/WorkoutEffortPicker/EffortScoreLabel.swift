@@ -4,7 +4,7 @@ import SwiftUI
 
 @available(iOS 18.0, watchOS 11.0, *)
 struct EffortScoreLabel: View {
-    let score: AppleEffortScore
+    let score: WorkoutEffortScore
     let isList: Bool
 
     var body: some View {
@@ -38,7 +38,7 @@ struct EffortScoreLabel: View {
 }
 
 struct EffortScoreIcon: View {
-    let score: AppleEffortScore?
+    let score: WorkoutEffortScore?
 
     var body: some View {
         Image(systemName: systemName)

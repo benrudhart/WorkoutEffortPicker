@@ -3,7 +3,7 @@
 import HealthKit
 import SwiftUI
 
-public enum AppleEffortScore: Int, Comparable, Sendable, Strideable {
+public enum WorkoutEffortScore: Int, Comparable, Sendable, Strideable {
     /// The user decided to skip the effort for this workout. This differs from not selecting a value at all!
     case skipped = 0
     case easy1 = 1
@@ -17,25 +17,25 @@ public enum AppleEffortScore: Int, Comparable, Sendable, Strideable {
     case allOut1
     case allOut2
 
-    public static func < (lhs: AppleEffortScore, rhs: AppleEffortScore) -> Bool {
+    public static func < (lhs: WorkoutEffortScore, rhs: WorkoutEffortScore) -> Bool {
         lhs.rawValue < rhs.rawValue
     }
 
     public typealias Stride = Int
 
-    public func distance(to other: AppleEffortScore) -> Stride {
+    public func distance(to other: WorkoutEffortScore) -> Stride {
         other.rawValue - rawValue
     }
 
-    public func advanced(by n: Stride) -> AppleEffortScore {
-        AppleEffortScore(safeScoreValue: rawValue + n)
+    public func advanced(by n: Stride) -> WorkoutEffortScore {
+        WorkoutEffortScore(safeScoreValue: rawValue + n)
     }
 
     /// Initializes with the given `safeScoreValue`. If it is "out of bounds" the  closest bounds will be used
     init(safeScoreValue: Int) {
         if safeScoreValue < 1 {
             self = .easy1
-        } else if let score = AppleEffortScore(rawValue: safeScoreValue) {
+        } else if let score = WorkoutEffortScore(rawValue: safeScoreValue) {
             self = score
         } else {
             self = .allOut2
@@ -44,13 +44,13 @@ public enum AppleEffortScore: Int, Comparable, Sendable, Strideable {
 }
 
 @available(iOS 18.0, watchOS 11.0, *)
-extension AppleEffortScore {
+extension WorkoutEffortScore {
     var hkQuantity: HKQuantity {
         let value = Double(rawValue)
         return HKQuantity(unit: .appleEffortScore(), doubleValue: value)
     }
 
-    var segment: AppleEffortScoreSegment? {
+    var segment: WorkoutEffortScoreSegment? {
         switch self {
         case .skipped: nil
         case .easy1, .easy2, .easy3: .easy
@@ -62,7 +62,7 @@ extension AppleEffortScore {
 
     var segmentIndex: Int? {
         if let segment,
-           let index = AppleEffortScoreSegment.allCases.firstIndex(of: segment) {
+           let index = WorkoutEffortScoreSegment.allCases.firstIndex(of: segment) {
             return index
         } else {
             return nil
@@ -80,7 +80,7 @@ extension AppleEffortScore {
 
 @available(iOS 18.0, watchOS 11.0, *)
 struct BackgroundGradient: View {
-    let score: AppleEffortScore?
+    let score: WorkoutEffortScore?
 
     var body: some View {
         LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing)

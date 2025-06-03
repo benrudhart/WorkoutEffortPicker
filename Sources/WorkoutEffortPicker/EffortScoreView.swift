@@ -6,8 +6,8 @@ import SwiftUI
 /// Should be modally presented on iOS
 @available(iOS 18.0, watchOS 11.0, *)
 struct EffortScoreView: View {
-    @State private(set) var score: AppleEffortScore?
-    let onSaveScore: (AppleEffortScore?) -> Void
+    @State private(set) var score: WorkoutEffortScore?
+    let onSaveScore: (WorkoutEffortScore?) -> Void
     @Environment(\.dismiss) private var dismiss
     private var stackSpacing: CGFloat {
 #if os(iOS)

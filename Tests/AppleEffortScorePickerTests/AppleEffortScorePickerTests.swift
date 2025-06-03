@@ -1,4 +1,4 @@
-@testable import AppleEffortScorePicker
+@testable import WorkoutEffortPicker
 import Testing
 
 @Test func example() async throws {

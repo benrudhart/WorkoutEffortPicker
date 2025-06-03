@@ -4,19 +4,19 @@
 import PackageDescription
 
 let package = Package(
-    name: "AppleEffortScorePicker",
+    name: "WorkoutEffortPicker",
     defaultLocalization: "en",
     platforms: [.iOS(.v13), .watchOS(.v6)], // The package can be imported for lower OS version, but the Views/ APIs are only available on iOS 18+ and watchOS 11+
     products: [
         .library(
-            name: "AppleEffortScorePicker",
-            targets: ["AppleEffortScorePicker"])
+            name: "WorkoutEffortPicker",
+            targets: ["WorkoutEffortPicker"])
     ],
     targets: [
-        .target(name: "AppleEffortScorePicker"),
+        .target(name: "WorkoutEffortPicker"),
         .testTarget(
-            name: "AppleEffortScorePickerTests",
-            dependencies: ["AppleEffortScorePicker"]
+            name: "WorkoutEffortPickerTests",
+            dependencies: ["WorkoutEffortPicker"]
         ),
     ],
     swiftLanguageModes: [.v6]

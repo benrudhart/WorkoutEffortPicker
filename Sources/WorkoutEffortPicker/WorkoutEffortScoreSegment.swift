@@ -2,22 +2,22 @@
 
 import SwiftUI
 
-enum AppleEffortScoreSegment: String, CaseIterable {
+enum WorkoutEffortScoreSegment: String, CaseIterable {
     case easy
     case moderate
     case hard
     case allOut
 }
 
-extension AppleEffortScoreSegment: Identifiable {
+extension WorkoutEffortScoreSegment: Identifiable {
     var id: String {
         rawValue
     }
 }
 
-@available(iOS 18.0, watchOS 11.0, *)
-extension AppleEffortScoreSegment {
-    var scores: ClosedRange<AppleEffortScore> {
+extension WorkoutEffortScoreSegment {
+    @available(iOS 18.0, watchOS 11.0, *)
+    var scores: ClosedRange<WorkoutEffortScore> {
         switch self {
         case .easy: .easy1 ... .easy3
         case .moderate: .moderate1 ... .moderate3

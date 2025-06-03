@@ -47,9 +47,18 @@
             BlueprintIdentifier = "B59E713F2DDDB32E0054AF71"
             BuildableName = "iOS Demo.app"
             BlueprintName = "iOS Demo"
-            ReferencedContainer = "container:AppleEffortScorePickerDemo.xcodeproj">
+            ReferencedContainer = "container:WorkoutEffortPickerDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B59E713F2DDDB32E0054AF71"
+            BuildableName = "iOS Demo.app"
+            BlueprintName = "iOS Demo"
+            ReferencedContainer = "container:AppleEffortScorePickerDemo.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -67,6 +76,15 @@
             ReferencedContainer = "container:AppleEffortScorePickerDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B59E713F2DDDB32E0054AF71"
+            BuildableName = "iOS Demo.app"
+            BlueprintName = "iOS Demo"
+            ReferencedContainer = "container:AppleEffortScorePickerDemo.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

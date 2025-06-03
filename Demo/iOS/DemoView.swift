@@ -1,6 +1,6 @@
 // Copyright (c) 2025 Ben Rudhart
 
-import AppleEffortScorePicker
+import WorkoutEffortPicker
 import HealthKit
 import SwiftUI
 
@@ -18,7 +18,7 @@ struct DemoView: View {
                     }
 
                     Section("Effort") {
-                        AppleEffortScoreCell(viewModel: AppleEffortScoreCellViewModel(workout: workout))
+                        WorkoutEffortButton(workout: workout)
                     }
                 }
             }

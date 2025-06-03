@@ -6,12 +6,12 @@ import HealthKit
 public extension HKHealthStore {
     // MARK: - Fetch Effort Score
 
-    func fetchEffortScore(workout: HKWorkout) async throws -> AppleEffortScore? {
+    func fetchEffortScore(workout: HKWorkout) async throws -> WorkoutEffortScore? {
         try await requestEffortScoreReadWriteAuthorization()
 
         let sample = try await fetchFirstEffortSample(workout: workout)
         let scoreValue = sample?.quantity.doubleValue(for: .appleEffortScore())
-        return scoreValue.flatMap { AppleEffortScore(rawValue: Int($0)) }
+        return scoreValue.flatMap { WorkoutEffortScore(rawValue: Int($0)) }
     }
 
     private func fetchFirstEffortSample(workout: HKWorkout) async throws -> HKQuantitySample? {
@@ -42,7 +42,7 @@ public extension HKHealthStore {
 
     // MARK: - Set Effort Score
 
-    func setEffortScore(_ score: AppleEffortScore?, workout: HKWorkout) async throws {
+    func setEffortScore(_ score: WorkoutEffortScore?, workout: HKWorkout) async throws {
         try await requestEffortScoreReadWriteAuthorization()
 
         if let score {
@@ -52,7 +52,7 @@ public extension HKHealthStore {
         }
     }
 
-    private func relateWorkoutEffortSample(score: AppleEffortScore, workout: HKWorkout) async throws {
+    private func relateWorkoutEffortSample(score: WorkoutEffortScore, workout: HKWorkout) async throws {
         let sample = HKQuantitySample(
             type: .effortType,
             quantity: score.hkQuantity,

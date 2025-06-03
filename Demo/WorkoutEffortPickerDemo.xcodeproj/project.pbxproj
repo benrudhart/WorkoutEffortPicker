@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B58853022DEF2DDF00424FEB /* WorkoutEffortPicker in Frameworks */ = {isa = PBXBuildFile; productRef = B58853012DEF2DDF00424FEB /* WorkoutEffortPicker */; };
+		B58853042DEF2DE600424FEB /* WorkoutEffortPicker in Frameworks */ = {isa = PBXBuildFile; productRef = B58853032DEF2DE600424FEB /* WorkoutEffortPicker */; };
 		B59E714E2DDDB32F0054AF71 /* watchOS Demo.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = B59E714D2DDDB32F0054AF71 /* watchOS Demo.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		B5F215EE2DDDE46A008B339A /* AppleEffortScorePicker in Frameworks */ = {isa = PBXBuildFile; productRef = B5F215ED2DDDE46A008B339A /* AppleEffortScorePicker */; };
-		B5F215F02DDDE473008B339A /* AppleEffortScorePicker in Frameworks */ = {isa = PBXBuildFile; productRef = B5F215EF2DDDE473008B339A /* AppleEffortScorePicker */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,7 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5F215EE2DDDE46A008B339A /* AppleEffortScorePicker in Frameworks */,
+				B58853022DEF2DDF00424FEB /* WorkoutEffortPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,7 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5F215F02DDDE473008B339A /* AppleEffortScorePicker in Frameworks */,
+				B58853042DEF2DE600424FEB /* WorkoutEffortPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,7 +136,7 @@
 			);
 			name = "iOS Demo";
 			packageProductDependencies = (
-				B5F215ED2DDDE46A008B339A /* AppleEffortScorePicker */,
+				B58853012DEF2DDF00424FEB /* WorkoutEffortPicker */,
 			);
 			productName = AppleEffortScorePickerDemo;
 			productReference = B59E71402DDDB32E0054AF71 /* iOS Demo.app */;
@@ -159,7 +159,7 @@
 			);
 			name = "watchOS Demo";
 			packageProductDependencies = (
-				B5F215EF2DDDE473008B339A /* AppleEffortScorePicker */,
+				B58853032DEF2DE600424FEB /* WorkoutEffortPicker */,
 			);
 			productName = "AppleEffortScorePickerDemo Watch App";
 			productReference = B59E714D2DDDB32F0054AF71 /* watchOS Demo.app */;
@@ -183,7 +183,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B59E713B2DDDB32E0054AF71 /* Build configuration list for PBXProject "AppleEffortScorePickerDemo" */;
+			buildConfigurationList = B59E713B2DDDB32E0054AF71 /* Build configuration list for PBXProject "WorkoutEffortPickerDemo" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -193,7 +193,7 @@
 			mainGroup = B59E71372DDDB32E0054AF71;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				B54488B02DDDE22C0001DC8E /* XCLocalSwiftPackageReference "../../AppleEffortScorePicker" */,
+				B52EA5472DEF2D8400283265 /* XCLocalSwiftPackageReference "../../WorkoutEffortPicker" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B59E71412DDDB32E0054AF71 /* Products */;
@@ -490,7 +490,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B59E713B2DDDB32E0054AF71 /* Build configuration list for PBXProject "AppleEffortScorePickerDemo" */ = {
+		B59E713B2DDDB32E0054AF71 /* Build configuration list for PBXProject "WorkoutEffortPickerDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B59E71582DDDB3300054AF71 /* Debug */,
@@ -520,22 +520,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		B54488B02DDDE22C0001DC8E /* XCLocalSwiftPackageReference "../../AppleEffortScorePicker" */ = {
+		B52EA5472DEF2D8400283265 /* XCLocalSwiftPackageReference "../../WorkoutEffortPicker" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../../AppleEffortScorePicker;
+			relativePath = ../../WorkoutEffortPicker;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B5F215ED2DDDE46A008B339A /* AppleEffortScorePicker */ = {
+		B58853012DEF2DDF00424FEB /* WorkoutEffortPicker */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B54488B02DDDE22C0001DC8E /* XCLocalSwiftPackageReference "../../AppleEffortScorePicker" */;
-			productName = AppleEffortScorePicker;
+			package = B52EA5472DEF2D8400283265 /* XCLocalSwiftPackageReference "../../WorkoutEffortPicker" */;
+			productName = WorkoutEffortPicker;
 		};
-		B5F215EF2DDDE473008B339A /* AppleEffortScorePicker */ = {
+		B58853032DEF2DE600424FEB /* WorkoutEffortPicker */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B54488B02DDDE22C0001DC8E /* XCLocalSwiftPackageReference "../../AppleEffortScorePicker" */;
-			productName = AppleEffortScorePicker;
+			package = B52EA5472DEF2D8400283265 /* XCLocalSwiftPackageReference "../../WorkoutEffortPicker" */;
+			productName = WorkoutEffortPicker;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

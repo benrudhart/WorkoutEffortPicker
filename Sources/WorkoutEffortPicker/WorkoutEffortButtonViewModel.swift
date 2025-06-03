@@ -5,24 +5,24 @@ import HealthKit
 
 @available(iOS 18.0, watchOS 11.0, *)
 @Observable @MainActor
-public final class AppleEffortScoreCellViewModel: AppleEffortScoreCellViewModelProtocol {
+final class WorkoutEffortButtonViewModel: WorkoutEffortButtonViewModelProtocol {
     let workout: HKWorkout
     private let healthStore: HKHealthStore
     private var didFetchScore = false
-    public private(set) var score: AppleEffortScore?
-    public private(set) var isPermissionDenied: Bool
+    private(set) var score: WorkoutEffortScore?
+    private(set) var isPermissionDenied: Bool
 
-    public init(workout: HKWorkout) {
+    init(workout: HKWorkout) {
         self.workout = workout
         self.healthStore = HKHealthStore()
         self.isPermissionDenied = healthStore.authorizationStatus(for: .effortType) == .sharingDenied
     }
 
-    public func onForeground() {
+    func onForeground() {
         isPermissionDenied = healthStore.authorizationStatus(for: .effortType) == .sharingDenied
     }
 
-    public func saveScore(_ score: AppleEffortScore?) {
+    func saveScore(_ score: WorkoutEffortScore?) {
         Task {
             do {
                 try await healthStore.setEffortScore(score, workout: workout)
@@ -33,7 +33,7 @@ public final class AppleEffortScoreCellViewModel: AppleEffortScoreCellViewModelP
         }
     }
 
-    public func onAppear() {
+    func onAppear() {
         guard !didFetchScore else { return }
 
         didFetchScore = true

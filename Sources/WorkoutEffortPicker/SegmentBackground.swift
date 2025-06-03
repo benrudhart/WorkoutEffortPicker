@@ -5,7 +5,7 @@ import SwiftUI
 @available(iOS 18.0, watchOS 11.0, *)
 struct SegmentBackground: View {
     private let color = Color.white.opacity(0.12)
-    let segment: AppleEffortScoreSegment
+    let segment: WorkoutEffortScoreSegment
     let stepWidth: CGFloat
     let leftHeight: CGFloat
     let rightHeight: CGFloat

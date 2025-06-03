@@ -3,18 +3,19 @@
 import SwiftUI
 import HealthKit
 
+/// A Button (iOS) or a NavigationLink (watchOS) that displays the selected effort shows a custom picker when selected as seen in Apples Fitness App (iOS) or after a workout with the Workout app (watchOS).
 @available(iOS 18.0, watchOS 11.0, *)
-public struct AppleEffortScoreCell: View {
-    @State private var viewModel: AppleEffortScoreCellViewModelProtocol
+public struct WorkoutEffortButton: View {
+    @State private var viewModel: WorkoutEffortButtonViewModelProtocol
     @State private var isScoreViewPresented = false
     @Environment(\.scenePhase) private var scenePhase
 
     /// convenience initializer, provides the default ViewModel
     public init(workout: HKWorkout) {
-        self.viewModel = AppleEffortScoreCellViewModel(workout: workout)
+        self.viewModel = WorkoutEffortButtonViewModel(workout: workout)
     }
 
-    public init(viewModel: AppleEffortScoreCellViewModelProtocol) {
+    public init(viewModel: WorkoutEffortButtonViewModelProtocol) {
         self.viewModel = viewModel
     }
 
@@ -79,7 +80,7 @@ public struct AppleEffortScoreCell: View {
         }
     }
 
-    private func saveScore(_ score: AppleEffortScore?) {
+    private func saveScore(_ score: WorkoutEffortScore?) {
         viewModel.saveScore(score)
     }
 
@@ -145,7 +146,7 @@ public struct AppleEffortScoreCell: View {
 
     /// TODO: improve icon by creating custom one
     private var scoreIcon: some View {
-        let value = Double(viewModel.score?.rawValue ?? 0) / Double(AppleEffortScore.allOut2.rawValue)
+        let value = Double(viewModel.score?.rawValue ?? 0) / Double(WorkoutEffortScore.allOut2.rawValue)
         return Image(systemName: "cellularbars", variableValue: value)
             .foregroundStyle(color)
             .imageScale(.large)
@@ -156,7 +157,7 @@ public struct AppleEffortScoreCell: View {
 #Preview {
     NavigationStack {
         List {
-            AppleEffortScoreCell(viewModel: PreviewScoreViewModel())
+            WorkoutEffortButton(viewModel: PreviewScoreViewModel())
         }
     }
     .environment(\.locale, .init(identifier: "de"))
@@ -164,11 +165,11 @@ public struct AppleEffortScoreCell: View {
 
 @available(iOS 18.0, watchOS 11.0, *)
 @Observable
-private class PreviewScoreViewModel: AppleEffortScoreCellViewModelProtocol {
-    var score: AppleEffortScore?
+private class PreviewScoreViewModel: WorkoutEffortButtonViewModelProtocol {
+    var score: WorkoutEffortScore?
     var isPermissionDenied = false
 
-    func saveScore(_ score: AppleEffortScore?) {
+    func saveScore(_ score: WorkoutEffortScore?) {
         self.score = score
     }
 
