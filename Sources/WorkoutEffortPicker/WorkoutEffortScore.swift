@@ -3,7 +3,7 @@
 import HealthKit
 import SwiftUI
 
-public enum WorkoutEffortScore: Int, Comparable, Sendable, Strideable {
+public enum WorkoutEffortScore: Int, Comparable, Sendable {
     /// The user decided to skip the effort for this workout. This differs from not selecting a value at all!
     case skipped = 0
     case easy1 = 1
@@ -16,22 +16,24 @@ public enum WorkoutEffortScore: Int, Comparable, Sendable, Strideable {
     case hard2
     case allOut1
     case allOut2
+}
 
+extension WorkoutEffortScore: Strideable {
     public static func < (lhs: WorkoutEffortScore, rhs: WorkoutEffortScore) -> Bool {
         lhs.rawValue < rhs.rawValue
     }
 
-    public typealias Stride = Int
-
-    public func distance(to other: WorkoutEffortScore) -> Stride {
+    public func distance(to other: WorkoutEffortScore) -> RawValue {
         other.rawValue - rawValue
     }
 
     public func advanced(by n: Stride) -> WorkoutEffortScore {
         WorkoutEffortScore(safeScoreValue: rawValue + n)
     }
+}
 
-    /// Initializes with the given `safeScoreValue`. If it is "out of bounds" the  closest bounds will be used
+extension WorkoutEffortScore {
+    /// Initializes with the given `safeScoreValue`. If it is "out of bounds" the closest bounds will be used
     init(safeScoreValue: Int) {
         if safeScoreValue < 1 {
             self = .easy1
@@ -41,10 +43,8 @@ public enum WorkoutEffortScore: Int, Comparable, Sendable, Strideable {
             self = .allOut2
         }
     }
-}
 
-@available(iOS 18.0, watchOS 11.0, *)
-extension WorkoutEffortScore {
+    @available(iOS 18.0, watchOS 11.0, *)
     var hkQuantity: HKQuantity {
         let value = Double(rawValue)
         return HKQuantity(unit: .appleEffortScore(), doubleValue: value)
