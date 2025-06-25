@@ -6,31 +6,50 @@ import HealthKit
 /// A Button (iOS) or a NavigationLink (watchOS) that displays the selected effort shows a custom picker when selected as seen in Apples Fitness App (iOS) or after a workout with the Workout app (watchOS).
 @available(iOS 18.0, watchOS 11.0, *)
 public struct WorkoutEffortButton: View {
-    @State private var viewModel: WorkoutEffortButtonViewModelProtocol
+    let workout: HKWorkout
+    var effortScoreService: EffortScoreServiceProtocol = EffortScoreService()
+    @State private var score: WorkoutEffortScore?
     @State private var isScoreViewPresented = false
+    @State private var isPermissionDenied: Bool = false
     @Environment(\.scenePhase) private var scenePhase
 
-    /// convenience initializer, provides the default ViewModel
     public init(workout: HKWorkout) {
-        self.viewModel = WorkoutEffortButtonViewModel(workout: workout)
+        self.workout = workout
+        self.score = nil
     }
 
-    public init(viewModel: WorkoutEffortButtonViewModelProtocol) {
-        self.viewModel = viewModel
+    fileprivate init(workout: HKWorkout, service: EffortScoreServiceProtocol) {
+        self.workout = workout
+        self.effortScoreService = service
     }
 
     public var body: some View {
         content
-            .onAppear(perform: viewModel.onAppear)
-            .onChange(of: scenePhase) { _, newValue in
-                if newValue == .active {
-                    viewModel.onForeground()
-                }
+            .task(id: workout.uuid, fetchScore)
+            .onChange(of: scenePhase, initial: true) { _, newValue in
+                guard newValue == .active else { return }
+                updatePermissionState()
             }
             .preferredColorScheme(.dark)
     }
 
-    @ViewBuilder
+    private func updatePermissionState() {
+        isPermissionDenied = HKHealthStore().authorizationStatus(for: .effortType) == .sharingDenied
+    }
+
+    @Sendable
+    private func fetchScore() async {
+        score = nil
+
+        do {
+            score = try await effortScoreService.fetchScore(workout: workout)
+        } catch {
+            if !(error is CancellationError) {
+                assertionFailure(error.localizedDescription)
+            }
+        }
+    }
+
     private var content: some View {
 #if os(iOS)
         Button {
@@ -73,15 +92,21 @@ public struct WorkoutEffortButton: View {
 
     @ViewBuilder
     private func scoreContent() -> some View {
-        if viewModel.isPermissionDenied {
+        if isPermissionDenied {
             UnauthorizedView()
         } else {
-            EffortScoreView(score: viewModel.score, onSaveScore: saveScore(_:))
-        }
-    }
+            EffortScoreView(score: score) { score in
+                self.score = score
 
-    private func saveScore(_ score: WorkoutEffortScore?) {
-        viewModel.saveScore(score)
+                Task {
+                    do {
+                        try await effortScoreService.saveScore(score, workout: workout)
+                    } catch {
+                        assertionFailure(error.localizedDescription)
+                    }
+                }
+            }
+        }
     }
 
     private var title: some View {
@@ -91,7 +116,7 @@ public struct WorkoutEffortButton: View {
 #if os(watchOS)
                 .frame(maxWidth: .infinity, alignment: .leading)
 #endif
-            if viewModel.score != nil {
+            if score != nil {
                 Image(systemName: "plusminus")
                     .imageScale(.small)
                     .foregroundStyle(.secondary)
@@ -114,13 +139,13 @@ public struct WorkoutEffortButton: View {
 
     private var contentLabel: some View {
         HStack {
-            EffortScoreIcon(score: viewModel.score)
-                .symbolRenderingMode(viewModel.score != nil ? .hierarchical : .monochrome)
+            EffortScoreIcon(score: score)
+                .symbolRenderingMode(score != nil ? .hierarchical : .monochrome)
 #if os(watchOS)
                 .imageScale(.small)
 #endif
 
-            if let score = viewModel.score {
+            if let score = score {
                 let key = score.segment?.localizedTitle ?? "common.skipped"
                 Text(key, bundle: .module)
             } else {
@@ -141,12 +166,12 @@ public struct WorkoutEffortButton: View {
     }
 
     private var color: some ShapeStyle {
-        viewModel.score?.color ?? .gray
+        score?.color ?? .gray
     }
 
     /// TODO: improve icon by creating custom one
     private var scoreIcon: some View {
-        let value = Double(viewModel.score?.rawValue ?? 0) / Double(WorkoutEffortScore.allOut2.rawValue)
+        let value = Double(score?.rawValue ?? 0) / Double(WorkoutEffortScore.allOut2.rawValue)
         return Image(systemName: "cellularbars", variableValue: value)
             .foregroundStyle(color)
             .imageScale(.large)
@@ -157,22 +182,20 @@ public struct WorkoutEffortButton: View {
 #Preview {
     NavigationStack {
         List {
-            WorkoutEffortButton(viewModel: PreviewScoreViewModel())
+            let previewWorkout = HKWorkout(activityType: .americanFootball, start: .now, end: .now)
+            let service = PreviewEffortScoreService(score: .allOut2)
+            WorkoutEffortButton(workout: previewWorkout, service: service)
         }
     }
     .environment(\.locale, .init(identifier: "de"))
 }
 
 @available(iOS 18.0, watchOS 11.0, *)
-@Observable
-private class PreviewScoreViewModel: WorkoutEffortButtonViewModelProtocol {
-    var score: WorkoutEffortScore?
-    var isPermissionDenied = false
+private struct PreviewEffortScoreService: EffortScoreServiceProtocol {
+    let score: WorkoutEffortScore
+    func saveScore(_ score: WorkoutEffortScore?, workout: HKWorkout) async throws {}
 
-    func saveScore(_ score: WorkoutEffortScore?) {
-        self.score = score
+    func fetchScore(workout: HKWorkout) async throws -> WorkoutEffortScore? {
+        score
     }
-
-    func onAppear() {}
-    func onForeground() {}
 }
