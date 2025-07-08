@@ -1028,10 +1028,6 @@
           }
         },
         "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Anstrengung hinzufügen"
-          },
           "variations" : {
             "device" : {
               "applewatch" : {
