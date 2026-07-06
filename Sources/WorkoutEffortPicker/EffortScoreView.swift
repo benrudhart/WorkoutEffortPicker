@@ -55,30 +55,52 @@ struct EffortScoreView: View {
 #endif
 
         ToolbarItem(placement: .confirmationAction) {
-            Button(
-                action: {
-                    onSaveScore(score)
-                    dismiss()
-                },
-                label: {
-                    Label {
-                        Text("common.update", bundle: .module)
-                    } icon: {
-                        Image(systemName: "checkmark")
-                    }
-                    .font(.body.weight(.medium))
-#if os(watchOS)
-                    .foregroundStyle(.black)
-                    .labelStyle(.iconOnly)
-                    .buttonStyle(.plain)
-#else
-                    .labelStyle(.titleOnly)
-#endif
-                }
-            )
-            .disabled(score == nil)
-            .tint(score == nil ? .tertiary : .primary)
+            confirmButton
         }
+    }
+
+    @ViewBuilder
+    private var confirmButton: some View {
+#if os(watchOS)
+        if #available(watchOS 26.0, *) {
+            // The confirm role renders watchOS's prominent confirmation button
+            // (checkmark, fill) with no label. A large control size widens it into an
+            // easier-to-hit capsule, tinted in the score's color so the fill matches
+            // the background gradient and the white checkmark stays legible.
+            Button(role: .confirm, action: save)
+                .disabled(score == nil)
+                .tint(score?.color)
+                .controlSize(.large)
+        } else {
+            // watchOS 11–25 lack the confirm role: build the same large tinted
+            // checkmark button by hand.
+            Button(action: save) {
+                Image(systemName: "checkmark")
+                    .font(.body.weight(.medium))
+                    .foregroundStyle(.white)
+            }
+            .disabled(score == nil)
+            .tint(score?.color)
+            .controlSize(.large)
+        }
+#else
+        Button(action: save) {
+            Label {
+                Text("common.update", bundle: .module)
+            } icon: {
+                Image(systemName: "checkmark")
+            }
+            .font(.body.weight(.medium))
+            .labelStyle(.titleOnly)
+        }
+        .disabled(score == nil)
+        .tint(score == nil ? .tertiary : .primary)
+#endif
+    }
+
+    private func save() {
+        onSaveScore(score)
+        dismiss()
     }
 
     @ViewBuilder
