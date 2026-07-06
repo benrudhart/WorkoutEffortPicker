@@ -9,6 +9,8 @@ public struct WorkoutEffortButton: View {
     let workout: HKWorkout
     var effortScoreService: EffortScoreServiceProtocol = EffortScoreService()
     @State private var score: WorkoutEffortScore?
+    @State private var fetchedWorkoutID: UUID?
+    @State private var saveTask: Task<Void, Never>?
     @State private var isScoreViewPresented = false
     @State private var isPermissionDenied: Bool = false
     @Environment(\.scenePhase) private var scenePhase
@@ -39,10 +41,16 @@ public struct WorkoutEffortButton: View {
 
     @Sendable
     private func fetchScore() async {
-        score = nil
+        if let fetchedWorkoutID, fetchedWorkoutID != workout.uuid {
+            score = nil // drop the score of a previous workout, but keep the current one while re-fetching
+        }
+
+        // the fetch below must not race a pending save, otherwise it resets the score just saved
+        await saveTask?.value
 
         do {
             score = try await effortScoreService.fetchScore(workout: workout)
+            fetchedWorkoutID = workout.uuid
         } catch {
             if !(error is CancellationError) {
                 assertionFailure(error.localizedDescription)
@@ -98,7 +106,7 @@ public struct WorkoutEffortButton: View {
             EffortScoreView(score: score) { score in
                 self.score = score
 
-                Task {
+                saveTask = Task {
                     do {
                         try await effortScoreService.saveScore(score, workout: workout)
                     } catch {
